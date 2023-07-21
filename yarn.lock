@@ -6893,6 +6893,11 @@
   "resolved" "https://registry.npmjs.org/react-native-gradle-plugin/-/react-native-gradle-plugin-0.70.3.tgz"
   "version" "0.70.3"
 
+"react-native-mask-input@^1.2.3":
+  "integrity" "sha512-RWx+gc1EaBslJWR6dsvGdILJ5XvnvZuyEsgJaH9uAMukB3Z9eOlxra1E7Ovck8NSMVcYWpBB/lzojO4LwqqXgA=="
+  "resolved" "https://registry.npmjs.org/react-native-mask-input/-/react-native-mask-input-1.2.3.tgz"
+  "version" "1.2.3"
+
 "react-native-navigation@7.33.3-hotfix.3":
   "integrity" "sha512-hulEqr1xvrxnK926ZxYUa+o/J0QlnO4l7NW5mmOC5nIduxK5O0VoB3XFRKOFVvV4fAxFBpbJMW+b11ixHzzEqA=="
   "resolved" "https://registry.npmjs.org/react-native-navigation/-/react-native-navigation-7.33.3-hotfix.3.tgz"

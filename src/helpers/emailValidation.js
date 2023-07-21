@@ -1,4 +1,4 @@
-export const emailValidation = (email) => {
+export const emailValidation = (email = '') => {
   const regex = new RegExp(
     /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{1,})$/iu
   );
@@ -8,6 +8,6 @@ export const emailValidation = (email) => {
   return isEmailLength && isEmailValid;
 };
 
-const emailStr = (email) => {
+const emailStr = (email = '') => {
   return email.includes('@') ? email.substring(0, email.indexOf('@')) : false;
 };
