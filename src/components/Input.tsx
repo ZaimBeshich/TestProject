@@ -138,7 +138,6 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     borderColor: 'black',
     borderWidth: 1,
-    marginBottom: 8,
   },
   inputInFocus: {
     borderColor: COLORS.blue,
@@ -153,5 +152,6 @@ const styles = StyleSheet.create({
     lineHeight: 18,
     letterSpacing: -0.78,
     marginLeft: 15,
+    marginTop: 8,
   },
 });
