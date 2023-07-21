@@ -8,7 +8,8 @@ export const Button = (props: ButtonProps) => {
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={[styles.button, disabled && styles.buttonDisabled]}>
+      style={[styles.button, disabled && styles.buttonDisabled]}
+      disabled={disabled}>
       <Text style={styles.buttonLabel}>{title}</Text>
     </TouchableOpacity>
   );

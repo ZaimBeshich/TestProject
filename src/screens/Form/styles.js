@@ -12,8 +12,11 @@ export const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
     backgroundColor: COLORS.white,
-    marginTop: 16,
+    // marginTop: 16,
     // backgroundColor: 'green',
+  },
+  avoidKeyboard: {
+    flex: 1,
   },
   h1: {
     fontFamily: Raleway_600,

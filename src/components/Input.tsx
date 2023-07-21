@@ -1,42 +1,99 @@
-import React from 'react';
-import { View, Text, TextInput, StyleSheet } from 'react-native';
+import React, { Ref, useRef, useState } from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  TextInputProps,
+  KeyboardTypeOptions,
+  NativeMethods,
+} from 'react-native';
 import COLORS from '../constants/colors';
 import { Raleway_400, Raleway_500 } from '../constants/fonts';
+import MaskInput, { Mask } from 'react-native-mask-input';
 
 type InputProps = {
   label: string;
-  error: string;
-  keyboardType: string;
-  onFocus: () => void;
+  value: string;
+  errorText: string | null;
+  isError: boolean;
+  keyboardType: KeyboardTypeOptions;
+  maxLength: number;
+  mask?: Mask;
+  inputName: string;
+  onFocus: (value: string, input: string) => void;
+  onChangeText: (value: string) => void;
 };
 
 export const Input = (props: InputProps) => {
-  const { label, error, keyboardType, onFocus } = props;
+  const {
+    label,
+    keyboardType,
+    onFocus,
+    onChangeText,
+    isError,
+    errorText,
+    maxLength,
+    value,
+    mask,
+    inputName,
+  } = props;
 
-  const isError = !!error;
-  const [isFocused, setIsFocused] = React.useState(false);
+  const [isFocused, setIsFocused] = useState(false);
 
-  //add animation to input
+  const isBlueBorder = Boolean(value) || isFocused;
+
+  //TODO add animation to input
   return (
     <View style={styles.container}>
-      <Text style={[styles.label, isFocused && styles.labelInFocus]}>
+      <Text
+        style={[
+          styles.label,
+          (isBlueBorder || isError) && styles.labelInFocus,
+        ]}>
         {label}
       </Text>
-      <TextInput
-        keyboardType={keyboardType}
-        autoCorrect={false}
-        onFocus={() => {
-          onFocus();
-          setIsFocused(true);
-        }}
-        onBlur={() => setIsFocused(false)}
-        style={[
-          styles.input,
-          isFocused && styles.inputInFocus,
-          isError && styles.inputInError,
-        ]}
-      />
-      {error && <Text style={styles.errorText}>{error}</Text>}
+      {mask ? (
+        <MaskInput
+          keyboardType={keyboardType}
+          onChangeText={onChangeText}
+          maxLength={maxLength}
+          autoCorrect={false}
+          autoCapitalize={'none'}
+          value={value}
+          onFocus={() => {
+            onFocus(value, inputName);
+            setIsFocused(true);
+          }}
+          onBlur={() => setIsFocused(false)}
+          mask={mask}
+          style={[
+            styles.input,
+            isBlueBorder && styles.inputInFocus,
+            isError && styles.inputInError,
+          ]}
+        />
+      ) : (
+        <TextInput
+          keyboardType={keyboardType}
+          onChangeText={onChangeText}
+          maxLength={maxLength}
+          autoCorrect={false}
+          value={value}
+          autoCapitalize={'none'}
+          onFocus={() => {
+            onFocus(value, inputName);
+            setIsFocused(true);
+          }}
+          onBlur={() => setIsFocused(false)}
+          style={[
+            styles.input,
+            isBlueBorder && styles.inputInFocus,
+            isError && styles.inputInError,
+          ]}
+        />
+      )}
+      {isError && <Text style={styles.errorText}>{errorText}</Text>}
     </View>
   );
 };
@@ -81,6 +138,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     borderColor: 'black',
     borderWidth: 1,
+    marginBottom: 8,
   },
   inputInFocus: {
     borderColor: COLORS.blue,
@@ -94,5 +152,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
     lineHeight: 18,
     letterSpacing: -0.78,
+    marginLeft: 15,
   },
 });
