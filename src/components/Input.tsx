@@ -59,8 +59,9 @@ export const Input = (props: InputProps) => {
           onChangeText={onChangeText}
           maxLength={maxLength}
           autoCorrect={false}
-          autoCapitalize={'none'}
+          spellCheck={false}
           value={value}
+          autoCapitalize={'none'}
           onFocus={() => {
             onFocus(value, inputName);
             setIsFocused(true);
@@ -79,6 +80,7 @@ export const Input = (props: InputProps) => {
           onChangeText={onChangeText}
           maxLength={maxLength}
           autoCorrect={false}
+          spellCheck={false}
           value={value}
           autoCapitalize={'none'}
           onFocus={() => {
@@ -126,8 +128,11 @@ const styles = StyleSheet.create({
     top: 5,
   },
   input: {
+    // flex: 1,
+    // height: 56,
     color: COLORS.black,
-    fontFamily: Raleway_500,
+    // fontFamily: Raleway_500,
+    fontWeight: '500',
     fontSize: 15,
     lineHeight: 20,
     letterSpacing: -0.24,
@@ -136,8 +141,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 26,
     paddingBottom: 10,
-    borderColor: 'black',
-    borderWidth: 1,
+    // justifyContent: 'center',
+    // textAlign: 'center',
   },
   inputInFocus: {
     borderColor: COLORS.blue,

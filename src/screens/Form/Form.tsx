@@ -10,6 +10,8 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Platform,
+  TouchableWithoutFeedback,
+  ImageBackground,
 } from 'react-native';
 
 import { Button } from '../../components/Button';
@@ -18,9 +20,16 @@ import { styles } from './styles';
 import { Checkbox } from '../../components/Checkbox';
 import { emailValidation } from '../../helpers/emailValidation';
 import { nameValidation } from '../../helpers/nameValidation';
-import { nameMask } from '../../helpers/masks';
 
-export const Form = ({ navigation }) => {
+import { PhoneInput } from '../../components/phoneInput';
+import { MASKS } from '../../constants/masks';
+import { phoneValidation } from '../../helpers/phoneValidation';
+import { useNavigation } from '@react-navigation/native';
+import { Confirm } from '../Confirm';
+
+export const Form = () => {
+  const navigation = useNavigation();
+
   const [inputs, setInputs] = useState({
     name: '',
     email: '',
@@ -33,117 +42,136 @@ export const Form = ({ navigation }) => {
     phone: false,
   });
 
-  useEffect(() => {});
+  const [isChecked, setIsChecked] = useState(true);
+
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+
+  useEffect(() => {
+    const isErrors = Object.values(errors).some((el) => el === true);
+    const isInputsEmpty = Object.values(inputs).some((el) => el.length === 0);
+
+    setIsButtonDisabled(isErrors || isInputsEmpty || !isChecked);
+    // console.log(
+    //   '\n isErrors: ',
+    //   isErrors,
+    //   '\n isInputsEmpty: ',
+    //   isInputsEmpty,
+    //   '\n every: ',
+    //   isErrors && isInputsEmpty && isChecked
+    // );
+  }, [errors, isChecked]);
 
   const validate = (text, input) => {
-    // console.log('\n validate: \n', 'text: ', text, ' input: ', input);
-    // Keyboard.dismiss();
-    let isValid = true;
-
     if (input === 'email') {
       handleError(!emailValidation(text), 'email');
+      return;
     }
-
     if (input === 'name') {
       handleError(!nameValidation(text), 'name');
+      return;
     }
+    if (input === 'phone') {
+      handleError(!phoneValidation(text), 'phone');
+      return;
+    }
+  };
 
-    // if (!inputs.name) {
-    //   handleError('Please input fullname', 'fullname');
-    //   isValid = false;
-    // }
+  //! СПРОСИТЬ ПРО ИНПУТ ДЛЯ ТЕЛЕФОНА
 
-    // if (!inputs.phone) {
-    //   handleError('Please input phone number', 'phone');
-    //   isValid = false;
-    // }
-
-    // if (isValid) {
-    //   // register();
-    //   console.log('\n make button active!!');
-    // }
+  const handleCheckbox = () => {
+    setIsChecked(!isChecked);
   };
 
   const handleOnChange = (text, input) => {
-    // switch (input) {
-    //   case 'name':
-    //     console.log('switch');
-    //     text = text.replace(/[^а-я]/gi, '');
-    //     break;
-    //   case 'phone':
-    //     console.log('\n handkeChange phone: ', text);
-    //     break;
-    // }
-    console.log('\n handleOnChange ->\n text: ', text, '\n input:', input);
     setInputs((prevState) => ({ ...prevState, [input]: text }));
     validate(text, input);
   };
   const handleError = (isError, input) => {
-    // console.log('\n handleError ->\n error: ', isError, '\n input:', input);
     setErrors((prevState) => ({ ...prevState, [input]: isError }));
   };
 
+  const submit = () => {
+    console.log('navigation', navigation);
+    navigation.navigate(Confirm);
+  };
+
   return (
-    <SafeAreaView style={styles.wrapper}>
-      <View
-        style={styles.container}
-        // behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      >
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          style={styles.avoidKeyboard}>
-          <Text style={styles.h1}>Забронировать слот</Text>
-          <Text style={styles.h2}>
-            Оставьте контактные данные, и мы с вами свяжемся в ближайший час.
-          </Text>
+    <SafeAreaView style={styles.safeAreaView}>
+      <ImageBackground
+        style={styles.img}
+        resizeMode='cover'
+        source={require('../../components/svg/BG.png')}
+      />
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        // keyboardVerticalOffset={10}
+        style={styles.avoidKeyboard}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={styles.container}>
+            {/* <View style={styles.inputs}> */}
 
-          <Input
-            onChangeText={(text) => handleOnChange(text, 'name')}
-            onFocus={validate}
-            value={inputs.name}
-            label='Имя'
-            inputName='name'
-            keyboardType={'default'}
-            maxLength={11}
-            isError={errors.name}
-            errorText={'Введите корректное имя'}
-            mask={nameMask}
-          />
+            <View>
+              <Text style={styles.h1}>Забронировать слот</Text>
+              <Text style={styles.h2}>
+                Оставьте контактные данные, и мы с вами свяжемся в ближайший
+                час.
+              </Text>
+              <Input
+                onChangeText={(text) => handleOnChange(text, 'name')}
+                onFocus={validate}
+                value={inputs.name}
+                label='Имя'
+                inputName='name'
+                keyboardType={'default'}
+                maxLength={11}
+                isError={errors.name}
+                errorText={'Введите корректное имя'}
+                mask={MASKS.NAME_MASK}
+              />
+              <Input
+                onChangeText={(text) => handleOnChange(text, 'email')}
+                onFocus={validate}
+                value={inputs.email}
+                inputName='email'
+                label='E-mail'
+                maxLength={31}
+                keyboardType={'email-address'}
+                isError={errors.email}
+                errorText={'Введите корректный e-mail'}
+              />
+              <Input
+                onChangeText={(text) => handleOnChange(text, 'phone')}
+                onFocus={validate}
+                label='Номер телефона'
+                value={inputs.phone}
+                inputName='phone'
+                maxLength={18}
+                keyboardType={'phone-pad'}
+                isError={errors.phone}
+                errorText={'Введите корректный номер телефона'}
+                mask={MASKS.RU_PHONE}
+              />
+            </View>
 
-          <Input
-            onChangeText={(text) => handleOnChange(text, 'email')}
-            onFocus={validate}
-            value={inputs.email}
-            inputName='email'
-            label='E-mail'
-            maxLength={31}
-            keyboardType={'email-address'}
-            isError={errors.email}
-            errorText={'Введите корректный e-mail'}
-          />
-          <Input
-            onChangeText={(text) => handleOnChange(text, 'phone')}
-            onFocus={() => handleError(null, 'phone')}
-            label='Номер телефона'
-            // error={errors.phone}
-            keyboardType={'phone-pad'}
-          />
+            <View>
+              <Button
+                title='Отправить'
+                // onPress={validate}
+                // onPress={() => navigation.navigate('Confirm')}
+                onPress={submit}
+                // disabled={isButtonDisabled}
+                disabled={false} //!
+              />
 
-          <Button
-            title='Отправить'
-            // onPress={validate}
-            // onPress={() => navigation.navigate('Confirm')}
-            onPress={() => emailValidation(inputs.email)}
-            disabled={false}
-          />
-        </KeyboardAvoidingView>
-
-        <Checkbox
-          text='Я даю согласие на обработку своих данных.'
-          onPress={() => console.log('\n checkbox')}
-          isChecked={true}
-        />
-      </View>
+              <Checkbox
+                text='Я даю согласие на обработку своих данных.'
+                onPress={handleCheckbox}
+                isChecked={isChecked}
+              />
+            </View>
+          </View>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };

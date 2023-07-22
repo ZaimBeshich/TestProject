@@ -9,12 +9,21 @@ import {
 import COLORS from '../constants/colors';
 import { Navigation } from 'react-native-navigation';
 import ArrowLeft from './svg/arrowLeft';
+import { useNavigation } from '@react-navigation/native';
 
-export const Header = ({ navigation }) => {
+export const Header = () => {
+  const navigation = useNavigation();
+
+  const onPress = () => {
+    navigation.canGoBack()
+      ? navigation.goBack()
+      : console.log('\n No previous screen!');
+  };
+
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor='transparent' barStyle={'dark-content'} />
-      <TouchableOpacity onPress={() => console.log(navigation)}>
+      <TouchableOpacity onPress={onPress}>
         <ArrowLeft width={24} height={24} />
       </TouchableOpacity>
     </View>
@@ -27,5 +36,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: 'transparent',
     width: 40,
+    // backgroundColor: 'green'
   },
 });
