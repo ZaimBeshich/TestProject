@@ -1,25 +1,44 @@
 import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Confirm } from './src/screens/Confirm';
 import { Form } from './src/screens/Form/Form';
 import { Header } from './src/components/Header';
+import { TouchableOpacity } from 'react-native';
+import ArrowLeft from './src/components/svg/arrowLeft';
 
 const Stack = createNativeStackNavigator();
 
 export const App = () => {
+  // const navigation = useNavigation();
+
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={'FormScreen'}>
+      <Stack.Navigator
+        initialRouteName={'FormScreen'}
+        // options={() => ({
+        //   headerTransparent: true,
+        //   headerLeft: (props) => <Header {...props} />,
+        // })}
+        screenOptions={() => ({
+          headerTransparent: true,
+          headerLeft: (props) => <Header {...props} />,
+        })}>
         <Stack.Screen
           name='FormScreen'
           component={Form}
-          options={{ headerLeft: (props) => <Header {...props} /> }}
+          // options={() => ({
+          //   headerTransparent: true,
+          //   headerLeft: (props) => <Header {...props} />,
+          // })}
         />
         <Stack.Screen
           name='Confirm'
           component={Confirm}
-          options={{ headerLeft: (props) => <Header {...props} /> }}
+          // options={() => ({
+          //   headerTransparent: true,
+          //   headerLeft: (props) => <Header {...props} />,
+          // })}
         />
       </Stack.Navigator>
     </NavigationContainer>
