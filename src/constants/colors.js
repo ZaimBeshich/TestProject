@@ -6,5 +6,6 @@ const COLORS = {
   light: '#F3F4FB',
   blue: '#413DFF',
   red: '#FF450B',
+  light_BG: '#F6F7FA',
 };
 export default COLORS;
