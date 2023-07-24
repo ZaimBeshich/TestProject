@@ -1,11 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import {
-  TouchableOpacity,
-  Text,
-  StyleSheet,
-  Animated,
-  Easing,
-} from 'react-native';
+import React from 'react';
+import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 import COLORS from '../constants/colors';
 import { Raleway_500 } from '../constants/fonts';
 
@@ -14,7 +8,7 @@ import * as Animatable from 'react-native-animatable';
 type ButtonProps = {
   title: string;
   disabled: boolean;
-  isLoading: boolean;
+  isLoading?: boolean;
   onPress: () => void;
 };
 

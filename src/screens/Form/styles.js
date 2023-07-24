@@ -1,4 +1,4 @@
-import { View, Text, TextInput, StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
 import COLORS from '../../constants/colors';
 import { Raleway_600, Raleway_400 } from '../../constants/fonts';
 
@@ -7,7 +7,6 @@ export const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
   },
-
   h1: {
     fontFamily: Raleway_600,
     color: COLORS.black,

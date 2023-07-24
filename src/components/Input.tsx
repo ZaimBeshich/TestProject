@@ -1,13 +1,5 @@
-import React, { Ref, useRef, useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInputProps,
-  KeyboardTypeOptions,
-  NativeMethods,
-  Animated,
-} from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, KeyboardTypeOptions } from 'react-native';
 import COLORS from '../constants/colors';
 import { Raleway_400, Raleway_500 } from '../constants/fonts';
 import MaskInput, { Mask } from 'react-native-mask-input';
@@ -68,7 +60,7 @@ export const Input = (props: InputProps) => {
           keyboardType={keyboardType}
           onChangeText={onChangeText}
           maxLength={maxLength}
-          // autoCorrect={false}
+          autoCorrect={false}
           spellCheck={false}
           value={value}
           caretHidden={false}

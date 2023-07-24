@@ -1,18 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import {
   View,
-  Image,
   Text,
-  SafeAreaView,
   Keyboard,
-  ScrollView,
-  Alert,
-  StatusBar,
-  TextInput,
   KeyboardAvoidingView,
   Platform,
   TouchableWithoutFeedback,
-  ImageBackground,
 } from 'react-native';
 
 import { Button } from '../../components/Button';
@@ -22,16 +15,14 @@ import { Checkbox } from '../../components/Checkbox';
 import { emailValidation } from '../../helpers/emailValidation';
 import { nameValidation } from '../../helpers/nameValidation';
 
-import { PhoneInput } from '../../components/phoneInput';
 import { MASKS } from '../../constants/masks';
 import { phoneValidation } from '../../helpers/phoneValidation';
 import { useNavigation } from '@react-navigation/native';
-import { Confirm } from '../Confirm';
-import { BlurView } from '@react-native-community/blur';
 import { BackgroundContainer } from '../../components/BackgroundContainer';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-export const Form = () => {
-  const navigation = useNavigation();
+export const Form: FC = () => {
+  const navigation = useNavigation<NativeStackNavigationProp<any>>();
 
   const [inputs, setInputs] = useState({
     name: '',

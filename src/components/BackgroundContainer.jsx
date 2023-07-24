@@ -1,17 +1,7 @@
-import React, { ChildContextProvider, FC } from 'react';
-import {
-  TouchableOpacity,
-  Text,
-  StyleSheet,
-  ButtonProps,
-  Platform,
-  SafeAreaView,
-  View,
-} from 'react-native';
+import React from 'react';
+import { StyleSheet, Platform, SafeAreaView, View } from 'react-native';
 import COLORS from '../constants/colors';
-import { Raleway_500 } from '../constants/fonts';
 import { BlurView } from '@react-native-community/blur';
-import { Confirm } from '../screens/Confirm';
 
 export const BackgroundContainer = (props) => {
   const isIos = Platform.OS === 'ios';
@@ -34,7 +24,7 @@ export const BackgroundContainer = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.BG_,
+    backgroundColor: COLORS.BG_light,
   },
   bg: {
     position: 'absolute',

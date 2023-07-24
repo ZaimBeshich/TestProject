@@ -1,22 +1,16 @@
-import React from 'react';
-import {
-  SafeAreaView,
-  Text,
-  View,
-  StyleSheet,
-  ImageBackground,
-} from 'react-native';
+import React, { FC } from 'react';
+import { Text, View, StyleSheet } from 'react-native';
 import COLORS from '../constants/colors';
 import { Button } from '../components/Button';
 import { Raleway_400, Raleway_600 } from '../constants/fonts';
 import Lottie from 'lottie-react-native';
-import { BlurView, VibrancyView } from '@react-native-community/blur';
 import { BackgroundContainer } from '../components/BackgroundContainer';
 
-export const Confirm = () => {
+export const Confirm: FC = () => {
   const onPress = () => {
     console.log('\n OK!');
   };
+
   return (
     <BackgroundContainer>
       <Lottie

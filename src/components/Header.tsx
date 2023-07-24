@@ -1,17 +1,10 @@
-import React from 'react';
-import {
-  TouchableOpacity,
-  StyleSheet,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
+import React, { FC } from 'react';
+import { TouchableOpacity, StyleSheet, View, StatusBar } from 'react-native';
 import COLORS from '../constants/colors';
-import { Navigation } from 'react-native-navigation';
 import ArrowLeft from './svg/arrowLeft';
 import { useNavigation } from '@react-navigation/native';
 
-export const Header = () => {
+export const Header: FC = () => {
   const navigation = useNavigation();
 
   const onPress = () => {
