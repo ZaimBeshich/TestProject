@@ -10,56 +10,38 @@ import COLORS from '../constants/colors';
 import { Button } from '../components/Button';
 import { Raleway_400, Raleway_600 } from '../constants/fonts';
 import Lottie from 'lottie-react-native';
+import { BlurView, VibrancyView } from '@react-native-community/blur';
+import { BackgroundContainer } from '../components/BackgroundContainer';
 
 export const Confirm = () => {
   const onPress = () => {
     console.log('\n OK!');
   };
   return (
-    <SafeAreaView style={styles.safeAreaView}>
-      <View style={styles.outer}>
-        <ImageBackground
-          style={styles.img}
-          resizeMode='cover'
-          source={require('../components/svg/BG.png')}
-        />
-        <View style={styles.container}>
-          <Lottie
-            source={require('../components/lottie/successfully-done.json')}
-            autoPlay
-            loop
-            style={styles.animated}
-          />
-          <Text style={styles.title}>Готово!</Text>
-          <Text style={styles.subTitle}>
-            {`Заявка отправлена. Мы с вами свяжемся\nв ближайший час.`}
-          </Text>
-          <Button disabled={false} title='Ок' onPress={onPress} />
-        </View>
+    <BackgroundContainer>
+      <Lottie
+        source={require('../components/lottie/successfully-done.json')}
+        autoPlay
+        loop={false}
+        style={styles.animated}
+      />
+      <View style={styles.titleContainer}>
+        <Text style={styles.title}>Готово!</Text>
       </View>
-    </SafeAreaView>
+      <View style={styles.subTitleContainer}>
+        <Text style={styles.subTitle}>
+          {`Заявка отправлена. Мы с вами свяжемся\nв ближайший час.`}
+        </Text>
+        <Button disabled={false} title='Ок' onPress={onPress} />
+      </View>
+    </BackgroundContainer>
   );
 };
 
 const styles = StyleSheet.create({
-  safeAreaView: {
+  titleContainer: {
     flex: 1,
-    // backgroundColor: COLORS.light_BG,
-  },
-  outer: {
-    flex: 1,
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    // alignItems: 'center',
-    // color: 'transparent',
-  },
-  img: {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    backgroundColor: COLORS.light_BG,
+    justifyContent: 'flex-end',
   },
   title: {
     color: COLORS.black,
@@ -67,6 +49,10 @@ const styles = StyleSheet.create({
     fontFamily: Raleway_600,
     fontSize: 24,
     lineHeight: 33,
+  },
+  subTitleContainer: {
+    flex: 1,
+    justifyContent: 'space-between',
   },
   subTitle: {
     color: COLORS.grey,
@@ -76,6 +62,6 @@ const styles = StyleSheet.create({
     lineHeight: 21,
   },
   animated: {
-    width: 25,
+    bottom: 100,
   },
 });

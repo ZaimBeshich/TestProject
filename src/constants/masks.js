@@ -14,7 +14,7 @@ const NAME_MASK = [
 
 const RU_PHONE = [
   '+',
-  /\d/,
+  '7',
   ' ',
   '(',
   /\d/,

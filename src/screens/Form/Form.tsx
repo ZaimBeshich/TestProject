@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
+  Image,
   Text,
   SafeAreaView,
   Keyboard,
@@ -26,6 +27,8 @@ import { MASKS } from '../../constants/masks';
 import { phoneValidation } from '../../helpers/phoneValidation';
 import { useNavigation } from '@react-navigation/native';
 import { Confirm } from '../Confirm';
+import { BlurView } from '@react-native-community/blur';
+import { BackgroundContainer } from '../../components/BackgroundContainer';
 
 export const Form = () => {
   const navigation = useNavigation();
@@ -46,19 +49,13 @@ export const Form = () => {
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
+  const [IsLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     const isErrors = Object.values(errors).some((el) => el === true);
     const isInputsEmpty = Object.values(inputs).some((el) => el.length === 0);
 
     setIsButtonDisabled(isErrors || isInputsEmpty || !isChecked);
-    // console.log(
-    //   '\n isErrors: ',
-    //   isErrors,
-    //   '\n isInputsEmpty: ',
-    //   isInputsEmpty,
-    //   '\n every: ',
-    //   isErrors && isInputsEmpty && isChecked
-    // );
   }, [errors, isChecked]);
 
   const validate = (text, input) => {
@@ -76,8 +73,6 @@ export const Form = () => {
     }
   };
 
-  //! СПРОСИТЬ ПРО ИНПУТ ДЛЯ ТЕЛЕФОНА
-
   const handleCheckbox = () => {
     setIsChecked(!isChecked);
   };
@@ -91,31 +86,27 @@ export const Form = () => {
   };
 
   const submit = () => {
-    console.log('navigation', navigation);
-    navigation.navigate(Confirm);
+    setIsLoading(true);
+    setTimeout(() => {
+      navigation.push('Confirm');
+      setIsLoading(false);
+    }, 2000); //mockValue
   };
 
   return (
-    <SafeAreaView style={styles.safeAreaView}>
-      <ImageBackground
-        style={styles.img}
-        resizeMode='cover'
-        source={require('../../components/svg/BG.png')}
-      />
+    <BackgroundContainer>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        // keyboardVerticalOffset={10}
-        style={styles.avoidKeyboard}>
+        style={{ flex: 1 }}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.container}>
-            {/* <View style={styles.inputs}> */}
-
             <View>
               <Text style={styles.h1}>Забронировать слот</Text>
               <Text style={styles.h2}>
                 Оставьте контактные данные, и мы с вами свяжемся в ближайший
                 час.
               </Text>
+
               <Input
                 onChangeText={(text) => handleOnChange(text, 'name')}
                 onFocus={validate}
@@ -144,6 +135,7 @@ export const Form = () => {
                 onFocus={validate}
                 label='Номер телефона'
                 value={inputs.phone}
+                defaultValue='+7'
                 inputName='phone'
                 maxLength={18}
                 keyboardType={'phone-pad'}
@@ -156,9 +148,8 @@ export const Form = () => {
             <View>
               <Button
                 title='Отправить'
-                // onPress={validate}
-                // onPress={() => navigation.navigate('Confirm')}
                 onPress={submit}
+                isLoading={IsLoading}
                 // disabled={isButtonDisabled}
                 disabled={false} //!
               />
@@ -172,6 +163,6 @@ export const Form = () => {
           </View>
         </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
-    </SafeAreaView>
+    </BackgroundContainer>
   );
 };

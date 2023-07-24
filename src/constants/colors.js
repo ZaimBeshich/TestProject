@@ -6,6 +6,8 @@ const COLORS = {
   light: '#F3F4FB',
   blue: '#413DFF',
   red: '#FF450B',
-  light_BG: '#F6F7FA',
+  BG_light: '#F6F7FA',
+  BG_purple: '#8583d5',
+  transparent: 'transparent',
 };
 export default COLORS;

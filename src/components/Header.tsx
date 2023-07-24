@@ -22,8 +22,11 @@ export const Header = () => {
 
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor='transparent' barStyle={'dark-content'} />
-      <TouchableOpacity onPress={onPress}>
+      <StatusBar
+        backgroundColor={COLORS.transparent}
+        barStyle={'dark-content'}
+      />
+      <TouchableOpacity onPress={onPress} style={styles.arrowContainer}>
         <ArrowLeft width={24} height={24} />
       </TouchableOpacity>
     </View>
@@ -34,8 +37,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: 'transparent',
+    backgroundColor: COLORS.transparent,
     width: 40,
-    // backgroundColor: 'green'
+  },
+  arrowContainer: {
+    marginLeft: 5,
   },
 });

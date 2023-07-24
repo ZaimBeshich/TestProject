@@ -2,15 +2,16 @@ import React, { Ref, useRef, useState } from 'react';
 import {
   View,
   Text,
-  TextInput,
   StyleSheet,
   TextInputProps,
   KeyboardTypeOptions,
   NativeMethods,
+  Animated,
 } from 'react-native';
 import COLORS from '../constants/colors';
 import { Raleway_400, Raleway_500 } from '../constants/fonts';
 import MaskInput, { Mask } from 'react-native-mask-input';
+import { TextInput } from 'react-native-paper';
 
 type InputProps = {
   label: string;
@@ -21,6 +22,7 @@ type InputProps = {
   maxLength: number;
   mask?: Mask;
   inputName: string;
+  defaultValue?: string;
   onFocus: (value: string, input: string) => void;
   onChangeText: (value: string) => void;
 };
@@ -37,37 +39,51 @@ export const Input = (props: InputProps) => {
     value,
     mask,
     inputName,
+    defaultValue,
   } = props;
 
   const [isFocused, setIsFocused] = useState(false);
 
   const isBlueBorder = Boolean(value) || isFocused;
 
-  //TODO add animation to input
-  return (
-    <View style={styles.container}>
+  const animValue = isBlueBorder || isError;
+
+  const renderLabel = () => {
+    return (
       <Text
         style={[
           styles.label,
-          (isBlueBorder || isError) && styles.labelInFocus,
+          isBlueBorder && styles.labelInFocus,
+          isError && styles.labelInFocus,
         ]}>
         {label}
       </Text>
-      {mask ? (
-        <MaskInput
+    );
+  };
+
+  return (
+    <View style={styles.container}>
+      {!mask ? (
+        <TextInput
           keyboardType={keyboardType}
           onChangeText={onChangeText}
           maxLength={maxLength}
-          autoCorrect={false}
+          // autoCorrect={false}
           spellCheck={false}
           value={value}
+          caretHidden={false}
+          cursorColor={COLORS.black}
+          label={renderLabel()}
+          mode={'flat'}
+          underlineColor={COLORS.transparent}
+          activeUnderlineColor={COLORS.transparent}
+          activeOutlineColor={COLORS.transparent}
           autoCapitalize={'none'}
           onFocus={() => {
             onFocus(value, inputName);
             setIsFocused(true);
           }}
           onBlur={() => setIsFocused(false)}
-          mask={mask}
           style={[
             styles.input,
             isBlueBorder && styles.inputInFocus,
@@ -82,6 +98,13 @@ export const Input = (props: InputProps) => {
           autoCorrect={false}
           spellCheck={false}
           value={value}
+          caretHidden={false}
+          cursorColor={COLORS.black}
+          label={renderLabel()}
+          mode={'flat'}
+          underlineColor={COLORS.transparent}
+          activeUnderlineColor={COLORS.transparent}
+          activeOutlineColor={COLORS.transparent}
           autoCapitalize={'none'}
           onFocus={() => {
             onFocus(value, inputName);
@@ -93,8 +116,11 @@ export const Input = (props: InputProps) => {
             isBlueBorder && styles.inputInFocus,
             isError && styles.inputInError,
           ]}
+          defaultValue={defaultValue}
+          render={(props) => <MaskInput {...props} mask={mask} />}
         />
       )}
+
       {isError && <Text style={styles.errorText}>{errorText}</Text>}
     </View>
   );
@@ -108,46 +134,36 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     marginVertical: 8,
   },
-
   label: {
     color: COLORS.black,
     fontFamily: Raleway_500,
     fontSize: 15,
     lineHeight: 20,
     letterSpacing: -0.24,
-    marginLeft: 16,
-    position: 'absolute',
-    zIndex: 10,
-    top: 20,
   },
   labelInFocus: {
     color: COLORS.grey,
-    fontFamily: Raleway_500,
-    fontSize: 12,
     lineHeight: 16,
-    top: 5,
+    letterSpacing: 0,
   },
   input: {
-    // flex: 1,
-    // height: 56,
+    fontFamily: Raleway_500,
     color: COLORS.black,
-    // fontFamily: Raleway_500,
-    fontWeight: '500',
     fontSize: 15,
     lineHeight: 20,
     letterSpacing: -0.24,
     backgroundColor: COLORS.white,
     borderRadius: 12,
-    paddingHorizontal: 16,
-    paddingTop: 26,
-    paddingBottom: 10,
-    // justifyContent: 'center',
-    // textAlign: 'center',
+    borderWidth: 0,
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
   },
   inputInFocus: {
+    borderWidth: 1,
     borderColor: COLORS.blue,
   },
   inputInError: {
+    borderWidth: 1,
     borderColor: COLORS.red,
   },
   errorText: {

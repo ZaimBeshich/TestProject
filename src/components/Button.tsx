@@ -1,22 +1,52 @@
-import React from 'react';
-import { TouchableOpacity, Text, StyleSheet, ButtonProps } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import {
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  Animated,
+  Easing,
+} from 'react-native';
 import COLORS from '../constants/colors';
 import { Raleway_500 } from '../constants/fonts';
 
+import * as Animatable from 'react-native-animatable';
+
+type ButtonProps = {
+  title: string;
+  disabled: boolean;
+  isLoading: boolean;
+  onPress: () => void;
+};
+
 export const Button = (props: ButtonProps) => {
-  const { title, disabled, onPress } = props;
+  const { title, disabled, onPress, isLoading } = props;
+
   return (
     <TouchableOpacity
       onPress={onPress}
       style={[styles.button, disabled && styles.buttonDisabled]}
       disabled={disabled}>
-      <Text style={styles.buttonLabel}>{title}</Text>
+      {isLoading ? (
+        <Animatable.Image
+          source={require('../components/img/Loader.png')}
+          animation={'rotate'}
+          duration={1000}
+          iterationDelay={0}
+          easing={'linear'}
+          useNativeDriver={true}
+          iterationCount={'infinite'}
+          style={{ width: 16, height: 16 }}
+        />
+      ) : (
+        <Text style={styles.buttonLabel}>{title}</Text>
+      )}
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   button: {
+    height: 56,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 12,
