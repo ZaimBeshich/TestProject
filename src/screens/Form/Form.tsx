@@ -50,7 +50,7 @@ export const Form: FC = () => {
     setIsButtonDisabled(isErrors || isInputsEmpty || !isChecked);
   }, [errors, isChecked]);
 
-  const validate = (text, input) => {
+  const validate = (text: string, input: string) => {
     if (input === 'email') {
       handleError(!emailValidation(text), 'email');
       return;
@@ -69,16 +69,15 @@ export const Form: FC = () => {
     setIsChecked(!isChecked);
   };
 
-  const handleOnChange = (text, input) => {
+  const handleOnChange = (text: string, input: string) => {
     setInputs((prevState) => ({ ...prevState, [input]: text }));
     validate(text, input);
   };
-  const handleError = (isError, input) => {
+  const handleError = (isError: boolean, input: string) => {
     setErrors((prevState) => ({ ...prevState, [input]: isError }));
   };
 
   const submit = () => {
-    console.log('navigate');
     setIsLoading(true);
     setTimeout(() => {
       navigation.push('Confirm');
@@ -144,8 +143,7 @@ export const Form: FC = () => {
                 title='Отправить'
                 onPress={submit}
                 isLoading={IsLoading}
-                // disabled={isButtonDisabled}
-                disabled={false} //!
+                disabled={isButtonDisabled}
               />
 
               <Checkbox

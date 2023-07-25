@@ -38,8 +38,6 @@ export const Input = (props: InputProps) => {
 
   const isBlueBorder = Boolean(value) || isFocused;
 
-  const animValue = isBlueBorder || isError;
-
   const renderLabel = () => {
     return (
       <Text
