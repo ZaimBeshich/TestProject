@@ -13,6 +13,7 @@ export const styles = StyleSheet.create({
     fontSize: 24,
     textAlign: 'center',
     marginVertical: 8,
+    marginHorizontal: 16,
   },
   h2: {
     fontFamily: Raleway_400,
@@ -20,6 +21,7 @@ export const styles = StyleSheet.create({
     fontSize: 15,
     textAlign: 'center',
     marginBottom: 24,
+    marginHorizontal: 16,
   },
   img: {
     position: 'absolute',

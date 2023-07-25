@@ -20,6 +20,7 @@ import { phoneValidation } from '../../helpers/phoneValidation';
 import { useNavigation } from '@react-navigation/native';
 import { BackgroundContainer } from '../../components/BackgroundContainer';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { Header } from '../../components/Header';
 
 export const Form: FC = () => {
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
@@ -77,6 +78,7 @@ export const Form: FC = () => {
   };
 
   const submit = () => {
+    console.log('navigate');
     setIsLoading(true);
     setTimeout(() => {
       navigation.push('Confirm');
@@ -86,6 +88,7 @@ export const Form: FC = () => {
 
   return (
     <BackgroundContainer>
+      <Header />
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={{ flex: 1 }}>

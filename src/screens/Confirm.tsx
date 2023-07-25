@@ -5,6 +5,7 @@ import { Button } from '../components/Button';
 import { Raleway_400, Raleway_600 } from '../constants/fonts';
 import Lottie from 'lottie-react-native';
 import { BackgroundContainer } from '../components/BackgroundContainer';
+import { Header } from '../components/Header';
 
 export const Confirm: FC = () => {
   const onPress = () => {
@@ -13,6 +14,7 @@ export const Confirm: FC = () => {
 
   return (
     <BackgroundContainer>
+      <Header />
       <Lottie
         source={require('../components/lottie/successfully-done.json')}
         autoPlay
@@ -57,5 +59,6 @@ const styles = StyleSheet.create({
   },
   animated: {
     bottom: 100,
+    zIndex: 1,
   },
 });

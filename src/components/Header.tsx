@@ -1,5 +1,11 @@
 import React, { FC } from 'react';
-import { TouchableOpacity, StyleSheet, View, StatusBar } from 'react-native';
+import {
+  TouchableOpacity,
+  StyleSheet,
+  View,
+  StatusBar,
+  Dimensions,
+} from 'react-native';
 import COLORS from '../constants/colors';
 import ArrowLeft from './svg/arrowLeft';
 import { useNavigation } from '@react-navigation/native';
@@ -26,14 +32,17 @@ export const Header: FC = () => {
   );
 };
 
+const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    flexDirection: 'row',
+    width: width,
     backgroundColor: COLORS.transparent,
-    width: 40,
+    height: 40,
+    justifyContent: 'center',
+    marginBottom: 16,
+    zIndex: 5,
   },
   arrowContainer: {
-    marginLeft: 5,
+    marginLeft: 15,
   },
 });

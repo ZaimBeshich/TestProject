@@ -33,16 +33,25 @@ export const App = () => {
         //   headerLeft: (props) => <Header {...props} />,
         // })}
         screenOptions={() => ({
-          headerTransparent: true,
+          headerShown: false,
+          // headerTransparent: true,
+          headerTitleStyle: {
+            color: COLORS.transparent,
+            background: COLORS.BG_purple,
+          },
           headerLeft: (props) => <Header {...props} />,
         })}>
         <Stack.Screen
           name='Form'
           component={Form}
-          // options={() => ({
-          //   headerTransparent: true,
-          //   headerLeft: (props) => <Header {...props} />,
-          // })}
+          options={() => ({
+            headerShown: false,
+            // headerTransparent: true,
+            // headerTitleStyle: {
+            //   color: COLORS.transparent,
+            // },
+            // headerLeft: (props) => <Header {...props} />,
+          })}
         />
         <Stack.Screen
           name='Confirm'

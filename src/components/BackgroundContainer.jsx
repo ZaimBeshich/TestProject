@@ -1,5 +1,11 @@
 import React from 'react';
-import { StyleSheet, Platform, SafeAreaView, View } from 'react-native';
+import {
+  StyleSheet,
+  Platform,
+  SafeAreaView,
+  View,
+  ImageBackground,
+} from 'react-native';
 import COLORS from '../constants/colors';
 import { BlurView } from '@react-native-community/blur';
 
@@ -13,11 +19,14 @@ export const BackgroundContainer = (props) => {
       {props.children}
     </SafeAreaView>
   ) : (
-    <View style={styles.container}>
-      <View style={styles.bg} />
-      <BlurView blurType='light' blurAmount={32} style={styles.absolute} />
-      {props.children}
-    </View>
+    <SafeAreaView style={styles.container}>
+      <ImageBackground
+        source={require('./img/BG.png')}
+        resizeMode='cover'
+        style={styles.img}>
+        {props.children}
+      </ImageBackground>
+    </SafeAreaView>
   );
 };
 
@@ -25,6 +34,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.BG_light,
+  },
+  img: {
+    flex: 1,
   },
   bg: {
     position: 'absolute',
